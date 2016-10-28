@@ -5,18 +5,27 @@ class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
     calories = db.Column(db.Integer, index=True)
-    category = db.Column(db.String(20)) # should be made enum eventually
+    category = db.Column(db.Integer) # should be made enum eventually
     unit = db.Column(db.String(5))
 
     def __repr__(self):
         return '<Ingredient %r>' % (self.name)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'calories': self.calories,
+            'category': self.category,
+            'unit': self.unit
+        }
 
 class Recipe(db.Model):
     __tablename__ = 'recipe'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
     description = db.Column(db.String(1000))
-    category = db.Column(db.String(20)) # should be made enum eventually
+    category = db.Column(db.Integer) # should be made enum eventually
     prep_time = db.Column(db.Integer) # in minutes
     date_added = db.Column(db.DateTime)
     servings = db.Column(db.Integer)
@@ -25,6 +34,19 @@ class Recipe(db.Model):
 
     def __repr__(self):
         return '<Recipe {0}>'.format(self.name)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'category': self.category,
+            'prepTime': self.prep_time,
+            'dateAdded': self.date_added,
+            'numServings': self.servings,
+            'caloriesPerServing': self.calories,
+            'ingredientList': [i.as_dict() for i in self.ingredients]
+        }
 
 class Recipe_Ingredient(db.Model):
     __tablename__ = 'recipe_ingredient'
@@ -35,6 +57,11 @@ class Recipe_Ingredient(db.Model):
     
     def __repr__(self):
         return '<Recipe_Ingredient r:{0} i:{1} u:{2}>'.format(self.recipe_id, self.ingredient_id, self.units)
+    def as_dict(self):
+        return {
+            'Item1': self.ingredient.as_dict(),
+            'Item2': self.units
+        }
 
 class Grocery_List(db.Model):
     __tablename__ = 'grocery_list'
