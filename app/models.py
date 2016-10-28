@@ -26,3 +26,6 @@ class Price(db.Model):
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'), primary_key=True)
     cost = db.Column(db.Integer) # cents per unit
     ingredient = db.relationship("Ingredient")
+
+    def __repr__(self):
+        return '<Price s:{0} i:{1} cost:{2}>'.format(self.store_id, self.ingredient_id, self.cost)
