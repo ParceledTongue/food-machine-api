@@ -1,6 +1,6 @@
 You will first need [virtualenv](https://pypi.python.org/pypi/virtualenv). 
 Then, in the root project folder, run `virtualenv flask`.
-Once this is done, do `flask/bin'pip install flask.
+Once this is done, do `flask/bin/pip install flask`.
 
 Then do all of the following (though it is not all necessary now or maybe ever).
 
