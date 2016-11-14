@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import abort, jsonify, make_response, request
 from app import app, db, models
 
 pre='/foodmachine/api/'
@@ -14,11 +14,15 @@ def get_ingredients():
 
 @app.route(pre + 'ingredients/<int:ingredient_id>', methods=['GET'])
 def get_ingredient(ingredient_id):
-    ingredient = models.Ingredient.query.get(ingredient_id).as_dict()
-    return jsonify({'ingredient': ingredient})
+    ingredient = models.Ingredient.query.get(ingredient_id)
+    if ingredient == None:
+        abort(404)
+    return jsonify({'ingredient': ingredient.as_dict()})
 
 @app.route(pre + 'ingredients', methods=['POST'])
 def create_ingredient():
+    if not request.json or not 'title' in request.json:
+        abort(400)
     ingredient = models.Ingredient(
         name = request.json['name'],
         calories = request.json['calories'],
@@ -29,9 +33,21 @@ def create_ingredient():
     db.session.commit()
     return jsonify({'ingredient': ingredient.as_dict()})
 
-# @app.route(pre + 'ingredients/<int:ingredient_id>', methods=['PUT'])
-# def update_ingredient(ingredient_id):
-# TODO
+#@app.route(pre + 'ingredients/<int:ingredient_id>', methods=['PUT'])
+#def update_ingredient(ingredient_id):
+#    ingredient = models.Ingredient.query.get(ingredient_id)
+#    if ingredient == None:
+#        abort(404)
+#    if not request.json:
+#        abort(400)
+#    if 'name' in request.json and type(request.json['name']) is not unicode:
+#        abort(400)
+#    if 'calories' in request.json and type(request.json['calories']) is not int:
+#        abort(400)
+#    if 'category' in request.json and type(request.json['category']) is not int:
+#        abort(400)
+#    if 'unit' in request.json and type(request.json['unit']) is not int:
+#        abort(400)
 
 @app.route(pre + 'ingredients/<int:ingredient_id>', methods=['DELETE'])
 def delete_ingredient(ingredient_id):
@@ -54,6 +70,10 @@ def get_recipes():
 def get_recipe(recipe_id):
     recipe = models.Recipe.query.get(recipe_id).as_dict()
     return jsonify({'recipe': recipe})
+
+#########
+# OTHER #
+#########
 
 @app.errorhandler(404)
 def not_found(error):
