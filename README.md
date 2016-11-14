@@ -19,7 +19,9 @@ $ flask/bin/pip install flipflop
 $ flask/bin/pip install coverage
 ```
 
-Finally, do `./db_migrate` followed by `./db_create` to create the database.
+Do `./db_migrate` followed by `./db_create` to create the database.
+
+Finally, make an executable (`chmod a+x run.py`) and run  with `./run.py`.
 
 You can see the complete database model in action by interfacing with it
 via the Python shell `/flask/bin/python` and SQLAlchemy calls.
