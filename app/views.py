@@ -1,4 +1,4 @@
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response, request, url_for
 from app import app, db, models
 
 pre='/foodmachine/api/'
@@ -9,7 +9,7 @@ pre='/foodmachine/api/'
 
 @app.route(pre + 'ingredients', methods=['GET'])
 def get_ingredients():
-    ingredients = [ingredient.as_dict() for ingredient in models.Ingredient.query.all()]
+    ingredients = [make_public_ingredient(ingredient.as_dict()) for ingredient in models.Ingredient.query.all()]
     return jsonify({'ingredients': ingredients})
 
 @app.route(pre + 'ingredients/<int:ingredient_id>', methods=['GET'])
@@ -17,7 +17,7 @@ def get_ingredient(ingredient_id):
     ingredient = models.Ingredient.query.get(ingredient_id)
     if ingredient == None:
         abort(404)
-    return jsonify({'ingredient': ingredient.as_dict()})
+    return jsonify({'ingredient': make_public_ingredient(ingredient.as_dict())})
 
 @app.route(pre + 'ingredients', methods=['POST'])
 def create_ingredient():
@@ -31,7 +31,7 @@ def create_ingredient():
     )
     db.session.add(ingredient)
     db.session.commit()
-    return jsonify({'ingredient': ingredient.as_dict()})
+    return jsonify({'ingredient': make_public_ingredient(ingredient.as_dict())})
 
 #@app.route(pre + 'ingredients/<int:ingredient_id>', methods=['PUT'])
 #def update_ingredient(ingredient_id):
@@ -56,6 +56,16 @@ def delete_ingredient(ingredient_id):
     ingredient.delete()
     db.session.commit()
     return jsonify({'ingredient': ingredient_dict})
+
+def make_public_ingredient(ingredient):
+    new_ingredient = {}
+    for field in ingredient:
+        if field == 'id':
+            new_ingredient['uri'] = url_for('get_ingredient', ingredient_id=ingredient['id'], _external=True)
+        else:
+            new_ingredient[field] = ingredient[field]
+    return new_ingredient
+
 
 ###########
 # RECIPES #
