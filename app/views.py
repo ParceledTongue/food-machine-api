@@ -21,7 +21,7 @@ def get_ingredient(ingredient_id):
 
 @app.route(pre + 'ingredients', methods=['POST'])
 def create_ingredient():
-    if not request.json or not 'title' in request.json:
+    if not request.json or not 'name' in request.json:
         abort(400)
     ingredient = models.Ingredient(
         name = request.json['name'],
@@ -33,29 +33,37 @@ def create_ingredient():
     db.session.commit()
     return jsonify({'ingredient': make_public_ingredient(ingredient.as_dict())})
 
-#@app.route(pre + 'ingredients/<int:ingredient_id>', methods=['PUT'])
-#def update_ingredient(ingredient_id):
-#    ingredient = models.Ingredient.query.get(ingredient_id)
-#    if ingredient == None:
-#        abort(404)
-#    if not request.json:
-#        abort(400)
-#    if 'name' in request.json and type(request.json['name']) is not unicode:
-#        abort(400)
-#    if 'calories' in request.json and type(request.json['calories']) is not int:
-#        abort(400)
-#    if 'category' in request.json and type(request.json['category']) is not int:
-#        abort(400)
-#    if 'unit' in request.json and type(request.json['unit']) is not int:
-#        abort(400)
+@app.route(pre + 'ingredients/<int:ingredient_id>', methods=['PUT'])
+def update_ingredient(ingredient_id):
+    ingredient = models.Ingredient.query.get(ingredient_id)
+    if ingredient == None:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'name' in request.json and type(request.json['name']) is not unicode:
+        abort(400)
+    if 'calories' in request.json and type(request.json['calories']) is not int:
+        abort(400)
+    if 'category' in request.json and type(request.json['category']) is not int:
+        abort(400)
+    if 'unit' in request.json and type(request.json['unit']) is not int:
+        abort(400)
+    ingredient.name = request.json.get('name', ingredient.name)
+    ingredient.calories = request.json.get('calories', ingredient.calories)
+    ingredient.category = request.json.get('category', ingredient.category)
+    ingredient.unit = request.json.get('unit', ingredient.unit)
+    db.session.commit()
+    return jsonify({'ingredient': make_public_ingredient(ingredient.as_dict())})
 
 @app.route(pre + 'ingredients/<int:ingredient_id>', methods=['DELETE'])
 def delete_ingredient(ingredient_id):
-    ingredient = models.Ingredient.query.filter_by(id=ingredient_id);
+    ingredient = models.Ingredient.query.get(ingredient_id)
+    if ingredient == None:
+        abort(404)
     ingredient_dict = ingredient.as_dict()
-    ingredient.delete()
+    db.session.delete(ingredient)
     db.session.commit()
-    return jsonify({'ingredient': ingredient_dict})
+    return jsonify({'ingredient': make_public_ingredient(ingredient_dict)})
 
 def make_public_ingredient(ingredient):
     new_ingredient = {}

@@ -5,8 +5,8 @@ class Ingredient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
     calories = db.Column(db.Integer, index=True)
-    category = db.Column(db.Integer) # should be made enum eventually
-    unit = db.Column(db.String(5))
+    category = db.Column(db.Integer) # enum
+    unit = db.Column(db.Integer) # enum
 
     def __repr__(self):
         return '<Ingredient %r>' % (self.name)
