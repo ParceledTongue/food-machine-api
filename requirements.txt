@@ -20,7 +20,6 @@ coverage==4.2
 decorator==4.0.10
 flipflop==1.0
 guess-language==0.2
-image-geometry==1.11.14
 interactive-markers==1.11.3
 itsdangerous==0.24
 message-filters==1.11.20
