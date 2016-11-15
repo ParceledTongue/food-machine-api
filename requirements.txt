@@ -23,12 +23,7 @@ guess-language==0.2
 itsdangerous==0.24
 pbr==1.10.0
 python-openid==2.2.5
-python-qt-binding==0.2.19
 pytz==2016.7
-qt-dotgraph==0.2.30
-qt-gui==0.2.30
-qt-gui-cpp==0.2.30
-qt-gui-py-common==0.2.30
 resource-retriever==1.11.7
 rviz==1.11.15
 sensor-msgs==1.11.9
@@ -40,13 +35,6 @@ sound-play==0.2.12
 sqlalchemy-migrate==0.10.0
 sqlparse==0.2.2
 srdfdom==0.3.3
-tf==1.11.8
-tf-conversions==1.11.8
-tf2-geometry-msgs==0.5.13
-tf2-kdl==0.5.13
-tf2-py==0.5.13
-tf2-ros==0.5.13
-tf2-sensor-msgs==0.5.13
 urdfdom-py==0.3.1
 warehouse-ros==0.8.8
 wsgiref==0.1.2
