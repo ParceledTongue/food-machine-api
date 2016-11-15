@@ -1,7 +1,7 @@
 from flask import abort, jsonify, make_response, request, url_for
 from app import app, db, models
 
-pre=''
+pre='/'
 
 ###############
 # INGREDIENTS #
