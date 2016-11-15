@@ -27,7 +27,6 @@ pytz==2016.7
 six==1.10.0
 sqlalchemy-migrate==0.10.0
 sqlparse==0.2.2
-srdfdom==0.3.3
 urdfdom-py==0.3.1
 wsgiref==0.1.2
 xacro==1.9.5
