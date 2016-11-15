@@ -19,7 +19,6 @@ click==6.6
 coverage==4.2
 decorator==4.0.10
 flipflop==1.0
-genpy==0.5.10
 guess-language==0.2
 image-geometry==1.11.14
 interactive-markers==1.11.3
