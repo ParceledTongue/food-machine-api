@@ -24,8 +24,6 @@ itsdangerous==0.24
 pbr==1.10.0
 python-openid==2.2.5
 pytz==2016.7
-resource-retriever==1.11.7
-rviz==1.11.15
 sensor-msgs==1.11.9
 six==1.10.0
 smach==2.0.0
