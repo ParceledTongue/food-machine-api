@@ -25,7 +25,6 @@ pbr==1.10.0
 python-openid==2.2.5
 pytz==2016.7
 six==1.10.0
-sound-play==0.2.12
 sqlalchemy-migrate==0.10.0
 sqlparse==0.2.2
 srdfdom==0.3.3
