@@ -18,9 +18,6 @@ blinker==1.4
 click==6.6
 coverage==4.2
 decorator==4.0.10
-diagnostic-analysis==1.8.10
-diagnostic-common-diagnostics==1.8.10
-diagnostic-updater==1.8.10
 dynamic-reconfigure==1.5.44
 flipflop==1.0
 gencpp==0.5.5
