@@ -15,7 +15,6 @@ WTForms==2.1
 Werkzeug==0.11.11
 argparse==1.2.1
 blinker==1.4
-catkin==0.6.18
 click==6.6
 controller-manager==0.9.4
 controller-manager-msgs==0.9.4
