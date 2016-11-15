@@ -21,7 +21,6 @@ decorator==4.0.10
 flipflop==1.0
 guess-language==0.2
 itsdangerous==0.24
-message-filters==1.11.20
 pbr==1.10.0
 pluginlib==1.10.3
 python-openid==2.2.5
