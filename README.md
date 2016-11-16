@@ -45,8 +45,10 @@ curl -X DELETE https://food-machine-api.herokuapp.com/ingredients/1
 JSON Structure
 --------------
 
-Note: all names must be unique. Also, all returned JSON objects will include an
-extra `"uri"` field by which to reference the object.
+Notes:
+- All names must be unique
+- All returned JSON objects will include an extra `"uri"` field by which to 
+  reference the object.
 
 ```
 {
