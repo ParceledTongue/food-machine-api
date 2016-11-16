@@ -50,6 +50,8 @@ Notes:
 - All returned JSON objects will include an extra `"uri"` field by which to 
   reference the object.
 
+### ingredients
+
 ```
 {
   "name": STRING(64),
