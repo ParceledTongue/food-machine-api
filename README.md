@@ -52,12 +52,10 @@ Notes:
 
 ```
 {
-  "ingredient: {
-    "name": STRING(64),
-    "calories": INT,
-    "category": INT,
-    "unit": INT
-  }
+  "name": STRING(64),
+  "calories": INT,
+  "category": INT,
+  "unit": INT
 }
 ```
 
