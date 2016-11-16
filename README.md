@@ -20,7 +20,9 @@ ingredients.
 JSON of the added item. It must contain the JSON representation of the object to
 be added. An example `curl` command:
 
-`curl -H "Content-Type: application/json" -X POST -d '{"name":"apple (sliced)", "calories":50, "category":3,"unit":0}' https://food-machine-api.herokuapp.com/ingredients`
+```
+curl -H "Content-Type: application/json" -X POST -d '{"name":"apple (sliced)", "calories":50, "category":3,"unit":0}' https://food-machine-api.herokuapp.com/ingredients
+```
 
 `PUT` requests are used to update item information in the database. They can
 contain full or partial information for the object (and the old values are used
@@ -28,12 +30,16 @@ for unspecified fields). For example, say the sliced apple ingredient above has
 the URI `http://food-machine-api.herokuapp.com/ingredients/1`. The following
 `curl` command updates the number of calories to 70:
 
-`curl -H "Content-Type: application/json" -X PUT -d '{"calories":70}' https://food-machine-api.herokuapp.com/ingredients/1`
+```
+curl -H "Content-Type: application/json" -X PUT -d '{"calories":70}' https://food-machine-api.herokuapp.com/ingredients/1
+```
 
 `DELETE` requests are probably about as self-explanatory as `GET` requests. A
 DELETE request returns the JSON of the deleted item. To delete our sliced apple:
 
-`curl -X DELETE https://food-machine-api.herokuapp.com/ingredients/1`
+```
+curl -X DELETE https://food-machine-api.herokuapp.com/ingredients/1
+```
 
 
 JSON Structure
