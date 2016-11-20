@@ -15,7 +15,6 @@ def get_ingredients():
 @app.route(pre + 'ingredients/<int:ingredient_id>', methods=['GET'])
 def get_ingredient(ingredient_id):
     ingredient = models.Ingredient.query.get(ingredient_id)
-    return str(ingredient)
     if ingredient == None:
         abort(404)
     return jsonify({'ingredient': make_public_ingredient(ingredient.as_dict())})
@@ -23,7 +22,7 @@ def get_ingredient(ingredient_id):
 @app.route(pre + 'ingredients/<string:ingredient_name>', methods=['GET'])
 def get_ingredient_by_name(ingredient_name):
     ingredient = models.Ingredient.query.filter_by(ingredient_name);
-    print(ingredient)
+    return str(ingredient)
     if len(ingredient) == 0:
         abort(404)
     ingredient = ingredient[0]
