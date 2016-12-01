@@ -32,7 +32,7 @@ def create_ingredient():
         abort(400)
     ingredient = models.Ingredient(
         name = request.json['name'],
-        calories = request.json('calories', -1),
+        calories = request.json.get('calories', -1),
         category = request.json.get('category', 0),
         unit = request.json.get('unit', 0)
     )
