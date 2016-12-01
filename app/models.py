@@ -25,7 +25,8 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True)
     description = db.Column(db.String(1000))
-    category = db.Column(db.Integer) # should be made enum eventually
+    category = db.Column(db.Integer) # enum
+    dish_type = db.Column(db.Integer) # enum
     prep_time = db.Column(db.Integer) # in minutes
     date_added = db.Column(db.DateTime)
     servings = db.Column(db.Integer)
@@ -41,6 +42,7 @@ class Recipe(db.Model):
             'name': self.name,
             'description': self.description,
             'category': self.category,
+            'dishType': self.dish_type,
             'prepTime': self.prep_time,
             'dateAdded': self.date_added,
             'numServings': self.servings,
