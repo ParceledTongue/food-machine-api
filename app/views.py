@@ -1,3 +1,4 @@
+import datetime
 from flask import abort, jsonify, make_response, request, url_for
 from app import app, db, models
 
@@ -106,7 +107,7 @@ def create_recipe():
         category = request.json.get('category', 0),
         dish_type = request.json.get('dishType', 0),
         prep_time = request.json.get('prepTime', 0),
-        date_added = None, # TODO
+        date_added = datetime.now(),
         servings = request.json.get('numServings', 0),
         calories = request.json.get('caloriesPerServing', -1)
     )
