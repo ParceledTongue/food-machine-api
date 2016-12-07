@@ -100,8 +100,8 @@ def get_recipe(recipe_id):
 @app.route(pre + 'recipes/<recipe_name>', methods=['GET'])
 def get_recipe_by_name(recipe_name):
     recipe = models.Recipe.query.filter_by(name = recipe_name).first()
-        if recipe == None:
-            abort(404)
+    if recipe == None:
+        abort(404)
     return jsonify({'recipe': make_public_recipe(recipe.as_dict())})
 
 @app.route(pre + 'recipes', methods=['POST'])
@@ -122,6 +122,16 @@ def create_recipe():
     db.session.add(recipe)
     db.session.commit()
     return jsonify({'recipe': make_public_recipe(recipe.as_dict())})
+
+@app.route(pre + 'recipes/<int:recipe_id>', methods=['DELETE'])
+def delete_recipe(recipe_id):
+    recipe = models.Recipe.query.get(recipe_id)
+    if recipe == None:
+        abort(404)
+    recipe_dict = recipe.as_dict()
+    db.session.delete(recipe)
+    db.session.commit()
+    return jsonify({'recipe': make_public_recipe(recipe_dict)})
 
 def make_public_recipe(recipe):
     new_recipe = {}
