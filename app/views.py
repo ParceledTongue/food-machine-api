@@ -101,13 +101,14 @@ def get_recipe(recipe_id):
 def create_recipe():
     if not request.json or not 'name' in request.json:
         abort(400)
+    dt = datetime()
     ingredient = models.Recipe(
         name = request.json['name'],
         description = request.json.get('description', ''),
         category = request.json.get('category', 0),
         dish_type = request.json.get('dishType', 0),
         prep_time = request.json.get('prepTime', 0),
-        date_added = datetime.now(),
+        date_added = dt.now(),
         servings = request.json.get('numServings', 0),
         calories = request.json.get('caloriesPerServing', -1)
     )
