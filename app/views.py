@@ -89,36 +89,41 @@ def make_public_ingredient(ingredient):
 
 @app.route(pre + 'recipes', methods=['GET'])
 def get_recipes():
-    recipes = [recipe.as_dict() for recipe in models.Recipe.query.all()]
+    recipes = [make_public_recipe(recipe.as_dict()) for recipe in models.Recipe.query.all()]
     return jsonify({'recipes': recipes})
 
 @app.route(pre + 'recipes/<int:recipe_id>', methods=['GET'])
 def get_recipe(recipe_id):
     recipe = models.Recipe.query.get(recipe_id).as_dict()
-    return jsonify({'recipe': recipe})
+    return jsonify({'recipe': make_public_receipe(recipe.as_dict())})
 
 @app.route(pre + 'recipes', methods=['POST'])
 def create_recipe():
     if not request.json or not 'name' in request.json:
         abort(400)
-    dt = datetime()
-    ingredient = models.Recipe(
+    recipe = models.Recipe(
         name = request.json['name'],
         description = request.json.get('description', ''),
         category = request.json.get('category', 0),
         dish_type = request.json.get('dishType', 0),
         prep_time = request.json.get('prepTime', 0),
-        date_added = dt.now(),
+        date_added = datetime.datetime.now(),
         servings = request.json.get('numServings', 0),
         calories = request.json.get('caloriesPerServing', -1)
     )
-    result = ''
-    for ingredient in request.json['ingredientList']:
-        result += ingredient.name
-    return result
-    db.session.add(ingredient)
+    # add ingredients
+    db.session.add(recipe)
     db.session.commit()
-    return jsonify({'ingredient': make_public_ingredient(ingredient.as_dict())})
+    return jsonify({'recipe': make_public_recipe(recipe.as_dict())})
+
+def make_public_recipe(recipe):
+    new_recipe = {}
+    for field in recipe:
+        if field == 'id':
+            new_recipe['uri'] = url_for('get_recipe', recipe_id=recipe['id'], _external=True)
+        else:
+            new_recipe[field] = recipe[field]
+    return new_recipe
 
 #########
 # OTHER #
