@@ -14,7 +14,9 @@ item's information.
 database. They can be used to get specific items via URI, or they can be used to
 get a list of all items of a particular type, e.g. 
 `https://food-machine-api.herokuapp.com/ingredients` to retrieve a full list of
-ingredients.
+ingredients. You may also `GET` by name, so for example
+`https://food-machine-api.herokuapp.com/recipes/Ground%20Beef` will return
+information about the recipe titled "Ground Beef".
 
 `POST` requests are used to add items to the database. A request returns the
 JSON of the added item. It must contain the JSON representation of the object to
