@@ -46,9 +46,13 @@ JSON Structure
 --------------
 
 Notes:
-- All names must be unique
+- All names must be unique.
 - All returned JSON objects will include an extra `"uri"` field by which to 
   reference the object.
+- Any dict shown below may contain extra keys; they will simply be ignored by
+  the API. For example, an ingredient could contain a "foo" key without issue.
+- If a `PUT` request for a recipe contains JSON with the `"ingredientList"`
+  key, the entire ingredient list will be replaced.
 
 ### ingredients
 
@@ -61,6 +65,30 @@ Notes:
 }
 ```
 
+### recipes
+
+```
+{
+  "name": STRING(64),
+  "description": STRING(1000),
+  "category": INT
+  "dishType": INT
+  "prepTime": INT
+  "dateAdded": DATETIME // as in "Fri, 09 Dec 2016 01:26:07 GMT"
+  "numServings": INT
+  "caloriesPerServing": INT
+  "ingredientList": [
+    {
+	  "Item1": {
+	    "name": STRING(64) // name of the ingredient
+	  },
+	  "Item2": FLOAT, // amount of the ingredient
+	  "Item3": INT // unit the amount is measured in
+	},
+	... // arbitrarily many of these triples
+  ]
+}
+```
 
 Running Locally
 ---------------
