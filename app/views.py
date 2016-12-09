@@ -148,11 +148,11 @@ def update_recipe(recipe_id):
     # should validate content here
     recipe.name = request.json.get('name', recipe.name)
     recipe.description = request.json.get('description', recipe.description)
-    category = request.json.get('category', recipe.category)
-    dish_type = request.json.get('dishType', recipe.dish_type)
-    prep_time = request.json.get('prepTime', recipe.prep_time)
-    servings = request.json.get('numServings', recipe.servings)
-    calories = request.json.get('caloriesPerServing', recipe.calories)
+    recipe.category = request.json.get('category', recipe.category)
+    recipe.dish_type = request.json.get('dishType', recipe.dish_type)
+    recipe.prep_time = request.json.get('prepTime', recipe.prep_time)
+    recipe.servings = request.json.get('numServings', recipe.servings)
+    recipe.calories = request.json.get('caloriesPerServing', recipe.calories)
     if 'ingredientList' in request.json:
         models.Recipe_Ingredient.query.filter_by(recipe_id = recipe.id).delete()
         for ingredientEntry in request.json['ingredientList']:
