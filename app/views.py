@@ -118,8 +118,19 @@ def create_recipe():
         servings = request.json.get('numServings', 0),
         calories = request.json.get('caloriesPerServing', -1)
     )
-    # add ingredients
     db.session.add(recipe)
+    db.session.commit()
+    db.session.refresh(recipe)
+    # add ingredients
+    for ingredientEntry in request.json['ingredientList']:
+        ingredient = models.Ingredient.query.filter_by(name = ingredientEntry['Item1']['name']).first()
+        entry = models.Recipe_Ingredient(
+            recipe_id = recipe.id,
+            ingredient_id = ingredient.id,
+            amount = ingredientEntry['Item2'],
+            units = ingredientEntry['Item3']
+        )
+        db.session.add(entry)
     db.session.commit()
     return jsonify({'recipe': make_public_recipe(recipe.as_dict())})
 

@@ -54,15 +54,17 @@ class Recipe_Ingredient(db.Model):
     __tablename__ = 'recipe_ingredient'
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), primary_key=True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredient.id'), primary_key=True)
-    units = db.Column(db.Float)
+    amount = db.Column(db.Float)
+    units = db.Column(db.Integer)
     ingredient = db.relationship("Ingredient")
     
     def __repr__(self):
-        return '<Recipe_Ingredient r:{0} i:{1} u:{2}>'.format(self.recipe_id, self.ingredient_id, self.units)
+        return '<Recipe_Ingredient r:{0} i:{1} a:{2} u:{3}>'.format(self.recipe_id, self.ingredient_id, self.units)
     def as_dict(self):
         return {
             'Item1': self.ingredient.as_dict(),
-            'Item2': self.units
+            'Item2': self.amount,
+            'Item3': self.units
         }
 
 class Grocery_List(db.Model):
