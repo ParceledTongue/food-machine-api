@@ -31,7 +31,7 @@ class Recipe(db.Model):
     date_added = db.Column(db.DateTime)
     servings = db.Column(db.Integer)
     calories = db.Column(db.Integer) # per serving
-    ingredients = db.relationship("Recipe_Ingredient")
+    ingredients = db.relationship("Recipe_Ingredient", cascade="delete")
 
     def __repr__(self):
         return '<Recipe {0}>'.format(self.name)
@@ -59,7 +59,7 @@ class Recipe_Ingredient(db.Model):
     ingredient = db.relationship("Ingredient")
     
     def __repr__(self):
-        return '<Recipe_Ingredient r:{0} i:{1} a:{2} u:{3}>'.format(self.recipe_id, self.ingredient_id, self.units)
+        return '<Recipe_Ingredient r:{0} i:{1} a:{2} u:{3}>'.format(self.recipe_id, self.ingredient_id, self.amount, self.units)
     def as_dict(self):
         return {
             'Item1': self.ingredient.as_dict(),

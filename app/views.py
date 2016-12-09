@@ -124,6 +124,10 @@ def create_recipe():
     # add ingredients
     for ingredientEntry in request.json['ingredientList']:
         ingredient = models.Ingredient.query.filter_by(name = ingredientEntry['Item1']['name']).first()
+        if ingredient == None:
+            db.session.delete(recipe)
+            db.session.commit()
+            abort(400) # ingredient name does not exist in db
         entry = models.Recipe_Ingredient(
             recipe_id = recipe.id,
             ingredient_id = ingredient.id,
