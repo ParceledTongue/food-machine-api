@@ -138,6 +138,39 @@ def create_recipe():
     db.session.commit()
     return jsonify({'recipe': make_public_recipe(recipe.as_dict())})
 
+@app.route(pre + 'recipes/<int:recipe_id>', methods=['PUT'])
+def update_recipe(recipe_id):
+    recipe = models.Recipe.query.get(recipe_id)
+    if recipe == None:
+        abort(404)
+    if not request.json:
+        abort(400)
+    # should validate content here
+    recipe.name = request.json.get('name', recipe.name)
+    recipe.description = request.json.get('description', recipe.description)
+    category = request.json.get('category', recipe.category)
+    dish_type = request.json.get('dishType', recipe.dish_type)
+    prep_time = request.json.get('prepTime', recipe.prep_time)
+    servings = request.json.get('numServings', recipe.servings)
+    calories = request.json.get('caloriesPerServing', recipe.calories)
+    if 'ingredientList' in request.json:
+        models.Recipe_Ingredient.query.filter_by(recipe_id = recipe.id).delete()
+        for ingredientEntry in request.json['ingredientList']:
+            ingredient = models.Ingredient.query.filter_by(name = ingredientEntry['Item1']['name']).first()
+            if ingredient == None: # TODO validation needs to happen earlier
+                db.session.delete(recipe)
+                db.session.commit()
+                abort(400) # ingredient name does not exist in db
+            entry = models.Recipe_Ingredient(
+                recipe_id = recipe.id,
+                ingredient_id = ingredient.id,
+                amount = ingredientEntry['Item2'],
+                units = ingredientEntry['Item3']
+            )
+            db.session.add(entry)
+    db.session.commit()
+    return jsonify({'recipe': make_public_recipe(recipe.as_dict())})
+
 @app.route(pre + 'recipes/<int:recipe_id>', methods=['DELETE'])
 def delete_recipe(recipe_id):
     recipe = models.Recipe.query.get(recipe_id)
